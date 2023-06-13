@@ -14,7 +14,8 @@ Two options:
 
 ### Build the sample
 
-- Set up environment: run `source setupvars.sh` in the directory where you installed OpenVINO
+- Set up environment: run `source setupvars.sh` in the directory where you installed OpenVINO. For the precompiled builds openvino installation this is in the /opt/intel/openvino_2023.0.0/ directory.
+
 - Run the ./build_samples.sh script. 
 
 The executable `latency_benchmark` will be created in the OpenVINO samples directory (the name of this directory will be displayed after building the samples).
@@ -25,3 +26,7 @@ The executable `latency_benchmark` will be created in the OpenVINO samples direc
 - Run: `./latency_benchmark <path_to_model> <batch_size> <streams> <infer_requests> <device>`
 
 By default `batch_size` is 1 and `device` GPU. `streams` and `infer_requests` are taken from OpenVINO Runtime.
+
+### Example Command
+
+numactl -C0 --localalloc ./latency_benchmark <path_to_model> 10 1 1 GPU
