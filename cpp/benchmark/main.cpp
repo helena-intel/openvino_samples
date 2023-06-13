@@ -136,6 +136,11 @@ int main(int argc, char* argv[]) {
                     // Keep callback small. This improves performance for fast (tens of thousands FPS) models
                     std::unique_lock<std::mutex> lock(mutex);
 
+                    // Copy result
+                    auto output = ireq.get_output_tensor(0);
+                    auto tensor_data = output.data<float>();
+                    auto result_data = result[0].get();
+                    std::memcpy(result_data, tensor_data, output.get_byte_size());
 
                     {
                         try {
@@ -150,12 +155,6 @@ int main(int argc, char* argv[]) {
                         }
                     }
                     cv.notify_one();
-
-                    // Copy result
-                    auto output = ireq.get_output_tensor(0);
-                    auto tensor_data = output.data<float>();
-                    auto result_data = result[0].get();
-                    std::memcpy(result_data, tensor_data, output.get_byte_size());
                 });
 
 
