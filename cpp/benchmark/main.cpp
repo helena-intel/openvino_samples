@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
         }
 
         // Optimize for latency
-        ov::AnyMap config{{ov::hint::performance_mode.name(), ov::hint::PerformanceMode::LATENCY}};
+        ov::AnyMap config{{ov::hint::performance_mode.name(), ov::hint::PerformanceMode::LATENCY}, {"INFERENCE_PRECISION_HINT","f16"}};
         if (streams > 0) {
             config.emplace(ov::num_streams.name(), streams);
         }
